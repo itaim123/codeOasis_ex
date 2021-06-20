@@ -1,9 +1,17 @@
 import React from 'react';
-// Checking line clamp with js
+import ClampLines from 'react-clamp-lines';
 
 const TicketContent = ({content}) => (
     <div className='content'>
-    {content}
+    <ClampLines
+      text={content}
+      id='clamp'
+      lines={3}
+      moreText='Show more...'
+      lessText='Show Less...'
+      className='expand_content'
+      innerElement='div'
+    />
     </div>
   );
 export default TicketContent;

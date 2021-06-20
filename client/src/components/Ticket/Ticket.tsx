@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { Ticket } from '../api';
+import { Ticket } from '../../api';
+import TicketContent from './Content/TicketContent';
+
+
+import './Ticket.scss';
 
 
 const TicketCmp = ({ ticket }) => {
@@ -26,7 +30,7 @@ const TicketCmp = ({ ticket }) => {
     <li key={ticket.id} className='ticket'>
       <h5 className='title'>{ticket.title}</h5>
       <span className='pinned' onClick={pinHandler}>{pinned ? 'Unpin' : 'Pin'}</span>
-      <div className='content'>{ticket.content}</div>
+      <TicketContent content={ticket.content} />
       <footer>
         <div className='meta-data'>
           By {ticket.userEmail} |{' '}

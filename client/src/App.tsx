@@ -2,7 +2,7 @@ import React from 'react';
 import './App.scss';
 import { createApiClient, Ticket } from './api';
 
-import TicketCmp from './components/Ticket';
+import TicketCmp from './components/Ticket/Ticket';
 
 export type AppState = {
   tickets?: Ticket[];

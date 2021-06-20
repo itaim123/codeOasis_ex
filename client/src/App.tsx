@@ -25,6 +25,7 @@ export class App extends React.PureComponent<{}, AppState> {
   }
 
   renderTickets = (tickets: Ticket[]) => {
+	  console.log(tickets, 'tickets');
     const filteredTickets = tickets.filter((t) =>
       (t.title.toLowerCase() + t.content.toLowerCase()).includes(
         this.state.search.toLowerCase()
@@ -33,7 +34,9 @@ export class App extends React.PureComponent<{}, AppState> {
 
     return (
       <ul className='tickets'>
-        {filteredTickets.map((ticket) => <TicketCmp ticket={ticket} />)}
+        {filteredTickets.map((ticket) => (
+          <TicketCmp key={ticket.id} ticket={ticket} />
+        ))}
       </ul>
     );
   };

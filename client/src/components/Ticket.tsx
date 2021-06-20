@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Ticket } from '../api';
 
+
 const TicketCmp = ({ ticket }) => {
   const [pinned, setPinned] = useState(false);
+  
   const renderLabels = (ticket: Ticket) => {
     const { labels } = ticket;
     if (labels.length !== 0) {

@@ -34,19 +34,6 @@
     }
   }
 
-  .content {
-    margin: 15px 0;
-    font-size: 14px;
-    font-weight: 400;
-    color: #9fb0bd;
-    max-width: 100%;
-    word-break: break-all;
-  //   display: -webkit-box;   
-  //  -webkit-line-clamp: 3;   
-  //  -webkit-box-orient: vertical;     
-  //  overflow: hidden; 
-  }
-
   footer {
     display: flex;
     justify-content: space-between;
@@ -60,9 +47,10 @@
     .labels {
       display: flex;
       .label {
-        margin-left: 15px;
-        padding: 10px 15px;
-        background-color: #e0e8ed;
+        font-size: 14px;
+        margin-left: 12px;
+        padding: 8px 12px;
+        background-color: #c3e0f2;
         border-radius: 5px;
         cursor: default;
       }

@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { Ticket } from '../../api';
-import TicketContent from './Content/TicketContent';
-
+import Content from './Content/Content';
 
 import './Ticket.scss';
 
+type TicketProps = {
+  key: string;
+  ticket: Ticket;
+};
 
-const TicketCmp = ({ ticket }) => {
+
+const TicketCmp: FC<TicketProps> = ({ ticket }) => {
   const [pinned, setPinned] = useState(false);
-  
+
   const renderLabels = (ticket: Ticket) => {
     const { labels } = ticket;
     if (labels.length !== 0) {
@@ -24,19 +28,20 @@ const TicketCmp = ({ ticket }) => {
     }
   };
 
-  const pinHandler = () => setPinned(prev => !prev)
+  const pinHandler = () => setPinned((pinned) => !pinned);
 
   return (
     <li key={ticket.id} className='ticket'>
       <h5 className='title'>{ticket.title}</h5>
-      <span className='pinned' onClick={pinHandler}>{pinned ? 'Unpin' : 'Pin'}</span>
-      <TicketContent content={ticket.content} />
+      <span className='pinned' onClick={pinHandler}>
+        {pinned ? 'Unpin' : 'Pin'}
+      </span>
+      <Content content={ticket.content} />
       <footer>
         <div className='meta-data'>
           By {ticket.userEmail} |{' '}
           {new Date(ticket.creationTime).toLocaleString()}
         </div>
-        {/* Check if labels property exists on ticket */}
         {ticket.labels && renderLabels(ticket)}
       </footer>
     </li>

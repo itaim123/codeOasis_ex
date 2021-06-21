@@ -1,0 +1,12 @@
+.content {
+    margin: 15px 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: #9fb0bd;
+    max-width: 100%;
+    word-break: break-all;
+    display: -webkit-box;   
+   -webkit-line-clamp: 3;   
+   -webkit-box-orient: vertical;     
+   overflow: hidden; 
+  }

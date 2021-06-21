@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser = require('body-parser');
+import { Ticket } from '../client/src/api';
 import { tempData } from './temp-data';
 import { serverAPIPort, APIPath } from '@fed-exam/config';
 
@@ -19,15 +20,21 @@ app.use((_, res, next) => {
 });
 
 app.get(APIPath, (req, res) => {
-
-  // @ts-ignore
+  let processedData: Ticket[] = tempData;
+  //@ts-ignore
   const page: number = req.query.page || 1;
+  //@ts-ignore
+  const searchTerm: string = req.query.search;
 
-  const paginatedData = tempData.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-
-  res.send(paginatedData);
+  if (searchTerm) {
+    processedData = tempData.filter((ticket) =>
+      (ticket.content + ticket.title).toLowerCase().includes(searchTerm)
+    );
+  }
+  const dataLength = processedData.length;
+  processedData = processedData.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  res.send(processedData);
 });
 
 app.listen(serverAPIPort);
-console.log('server running', serverAPIPort)
-
+console.log('server running', serverAPIPort);

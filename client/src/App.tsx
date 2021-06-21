@@ -1,75 +1,67 @@
-import React from 'react';
-import './App.scss';
+import React, { FC, useState, useEffect } from 'react';
 import { createApiClient, Ticket } from './api';
 
-import TicketCmp from './components/Ticket/Ticket';
+import Button from './components/UI/Button/Button';
+import Tickets from './components/Tickets/Tickets';
 
-export type AppState = {
-  tickets?: Ticket[];
-  search: string;
-};
+import './App.scss';
 
 const api = createApiClient();
 
-export class App extends React.PureComponent<{}, AppState> {
-  state: AppState = {
-    search: '',
+const AppFunctional: FC = () => {
+  const [search, setSearch] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
+  const [tickets, setTickets] = useState<Ticket[]>([]);
+
+  let searchDebounce: any = null;
+
+  useEffect(() => {
+    (async function () {
+      setTickets(await api.getTickets(page));
+    })();
+    console.log('use effect, fetches tickets123')
+    // eslint-disable-next-line
+  }, []);
+
+  const changePage = async (pageNum: string) => {
+    const updatedPage: number = pageNum === 'inc' ? page + 1 : page - 1;
+    setPage(updatedPage);
+    console.log(page, updatedPage)
+    setTickets(await api.getTickets(updatedPage, search));
   };
 
-  searchDebounce: any = null;
+  const onSearch = async (val: string) => {
+    clearTimeout(searchDebounce);
 
-  async componentDidMount() {
-    this.setState({
-      tickets: await api.getTickets(),
-    });
-  }
-
-  renderTickets = (tickets: Ticket[]) => {
-	  console.log(tickets, 'tickets');
-    const filteredTickets = tickets.filter((t) =>
-      (t.title.toLowerCase() + t.content.toLowerCase()).includes(
-        this.state.search.toLowerCase()
-      )
-    );
-
-    return (
-      <ul className='tickets'>
-        {filteredTickets.map((ticket) => (
-          <TicketCmp key={ticket.id} ticket={ticket} />
-        ))}
-      </ul>
-    );
-  };
-
-  onSearch = async (val: string, newPage?: number) => {
-    clearTimeout(this.searchDebounce);
-
-    this.searchDebounce = setTimeout(async () => {
-      this.setState({
-        search: val,
-      });
+    searchDebounce = setTimeout(async () => {
+      setSearch(val);
+      setTickets(await api.searchTickets(val));
+      setPage(1);
     }, 300);
   };
 
-  render() {
-    const { tickets } = this.state;
-    return (
+  console.log(tickets);
+
+  return (
       <main>
         <h1>Tickets List</h1>
         <header>
           <input
             type='search'
             placeholder='Search...'
-            onChange={(e) => this.onSearch(e.target.value)}
+            onChange={(e) => onSearch(e.target.value)}
           />
         </header>
+        <Button onClick={() => changePage('inc')}>Increment</Button>
+        {page !== 1 && (
+          <Button onClick={() => changePage('dec')}>Decrement</Button>
+        )}
         {tickets ? (
           <div className='results'>Showing {tickets.length} results</div>
         ) : null}
-        {tickets ? this.renderTickets(tickets) : <h2>Loading..</h2>}
+        {tickets ? <Tickets tickets={tickets} /> : <h2>Loading..</h2>}
       </main>
-    );
-  }
-}
+  );
+};
 
-export default App;
+export default AppFunctional;

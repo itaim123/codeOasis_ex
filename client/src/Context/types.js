@@ -1,6 +1,0 @@
-export const TYPES = {
-    INC_PAGE: 'INC_PAGE',
-    DEC_PAGE: 'DEC_PAGE',
-    SET_TICKETS: 'SET_TICKETS',
-    PAGE_DEFAULT: 'PAGE_DEFAULT',
-}

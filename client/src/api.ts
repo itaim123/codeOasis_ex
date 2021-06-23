@@ -22,7 +22,6 @@ export const createApiClient = (): ApiClient => {
             return axios.get(APIRootPath + `?page=${page}&?search=${searchTerm}`).then((res) => res.data);
         },
         searchTickets: (val) => {
-            console.log(val, 'hey')
             return axios.get(APIRootPath + `?search=${val}`).then((res) => res.data)
         }
     }

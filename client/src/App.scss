@@ -21,37 +21,6 @@ body {
     margin: 12px 5px;
   }
 
-  header {
-    width: 100%;
-    flex-shrink: 0;
-    border-radius: 6px;
-    background-color: #fff;
-    box-shadow: 0 2px 6px 1px #e1e5e8;
-    margin-bottom: 14px;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #fff;
-    padding: 10px 20px;
-    position: relative;
-
-    input {
-      width: 100%;
-      text-overflow: ellipsis;
-      display: inline-block;
-      color: #20455e;
-      font-size: 14px;
-      outline: 0;
-      transition: border 0.1s ease;
-      resize: none;
-      border: 1px solid #b6c1cd;
-      border: none;
-
-      &::placeholder {
-        color: #b6c1cd;
-      }
-    }
-  }
-
   a {
     color: #3899ec;
     cursor: pointer;

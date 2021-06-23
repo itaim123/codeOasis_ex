@@ -31,7 +31,7 @@ app.get(APIPath, (req, res) => {
       (ticket.content + ticket.title).toLowerCase().includes(searchTerm)
     );
   }
-  const dataLength = processedData.length;
+
   processedData = processedData.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
   res.send(processedData);
 });

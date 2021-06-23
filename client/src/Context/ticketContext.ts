@@ -1,14 +1,10 @@
-import { createContext } from 'react';
-import { Ticket } from '../api';
+import {createContext, Dispatch } from 'react';
+import { TicketActions } from './ticketActions';
+import { TicketStateInterface, initialTicketState } from './TicketState';
 
-export type ContextType = {
-  page: number;
-  tickets: Ticket[];
-};
+const TicketContext = createContext<{state: TicketStateInterface, dispatch: Dispatch<TicketActions>}>({
+    state: initialTicketState,
+    dispatch: () => undefined
+})
 
-const ticketContext = createContext<ContextType>({
-    page: 1,
-    tickets: [],
-});
-
-export default ticketContext;
+export default TicketContext;

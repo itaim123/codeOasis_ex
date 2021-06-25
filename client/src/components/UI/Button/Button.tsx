@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './Button.scss';
+
+// interface ButtonProps {
+//   onClick: ()=>void;
+//   disabled?: boolean
+// }
 
 const Button = ({ children, onClick }) => (
   <div onClick={onClick} className='button'>

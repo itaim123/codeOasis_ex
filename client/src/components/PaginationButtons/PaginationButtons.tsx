@@ -1,13 +1,32 @@
-import React from 'react';
+import React, { FC, useContext } from 'react';
 import Button from '../UI/Button/Button';
+import { setTickets, setPage } from '../../Context/ticketReducer';
+import TicketContex from '../../Context/TicketContext';
+import { createApiClient } from '../../api';
+import './PaginationButtons.scss';
 
-const PaginationButtons = ({ tickets, onClick, page }) => {
+const api = createApiClient();
+
+const PaginationButtons: FC = () => {
+  const { state, dispatch } = useContext(TicketContex);
+  const { searchTerm, page } = state;
+
+  const changePage = async (pageNum: string) => {
+    const updatedPageNumber = pageNum === 'inc' ? page + 1 : page - 1;
+    dispatch(setPage(updatedPageNumber));
+    dispatch(setTickets(await api.getTickets(updatedPageNumber, searchTerm)));
+    // Throw Dispatches Here
+  };
+
+  //  disabled={page === 1 ? true : false}
+
   return (
-    <>  
-      <Button onClick={onClick}>Increment</Button>
-      {page !== 1 && (
-        <Button onClick={onClick}>Decrement</Button>
-      )}
-    </>
+    <div className='paginationButtons'>
+      <Button onClick={() => changePage('dec')}>Decrement</Button>
+      <div>Page number is {page}</div>
+      <Button onClick={() => changePage('inc')}>Increment</Button>
+    </div>
   );
 };
+
+export default PaginationButtons;

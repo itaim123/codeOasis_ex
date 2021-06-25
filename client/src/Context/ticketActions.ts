@@ -1,20 +1,13 @@
 import { Ticket } from './TicketState';
 
 export enum ActionType {
-    INC_PAGE,
-    DEC_PAGE,
     SET_TICKETS,
-    PAGE_DEFAULT
-}
-
-export interface IncPageType {
-    type: ActionType.INC_PAGE;
-    payload: string
-}
-
-export interface DecPageType {
-    type: ActionType.DEC_PAGE;
-    payload: string
+    PAGE_DEFAULT,
+    SET_PAGE,
+    GET_BY_PAGE,
+    SET_SEARCH_TERM,
+    ADD_PINNED_TICKET,
+    REMOVE_PINNED_TICKET
 }
 
 export interface SetTicketsType {
@@ -22,8 +15,33 @@ export interface SetTicketsType {
     payload: Ticket[]
 }
 
+export interface AddPinnedTicketType {
+    type: ActionType.ADD_PINNED_TICKET,
+    payload: Ticket
+}
+
+export interface RemovePinnedTicketType {
+    type: ActionType.REMOVE_PINNED_TICKET,
+    payload: string
+}
+
 export interface PageDefaultType {
     type: ActionType.PAGE_DEFAULT
 }
 
-export type TicketActions = IncPageType | DecPageType | SetTicketsType | PageDefaultType;
+export interface SetPageType {
+    type: ActionType.SET_PAGE,
+    payload: number
+}
+
+export interface GetByPageType {
+    type: ActionType.GET_BY_PAGE,
+    payload: { page: number, search: string }
+}
+
+export interface SetSearchTermType {
+    type: ActionType.SET_SEARCH_TERM,
+    payload: string
+}
+
+export type TicketActions = SetTicketsType | PageDefaultType | SetPageType | GetByPageType | SetSearchTermType | AddPinnedTicketType | RemovePinnedTicketType;

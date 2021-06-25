@@ -13,20 +13,15 @@ type TicketProps = {
 const TicketCmp: FC<TicketProps> = ({ ticket }) => {
   const [pinned, setPinned] = useState(false);
 
-  const renderLabels = (ticket: Ticket) => {
-    const { labels } = ticket;
-    if (labels.length !== 0) {
-      return (
+  const renderLabels = (ticket: Ticket) : JSX.Element => (
         <div className='labels'>
-          {labels.map((label) => (
+          {ticket.labels.map((label) => (
             <span className='label' key={label}>
               {label}
             </span>
           ))}
         </div>
       );
-    }
-  };
 
   const pinHandler = () => setPinned((pinned) => !pinned);
 

@@ -1,6 +1,6 @@
 import React, { FC, useContext } from 'react';
 import { createApiClient } from '../../../api';
-import { setTickets } from '../../../Context/ticketReducer';
+import { setTickets, setSearchTerm } from '../../../Context/ticketReducer';
 import TicketContext from '../../../Context/TicketContext';
 import './SearchBoxInput.scss';
 
@@ -19,6 +19,7 @@ const SearchInput: FC<SearchInputProps> = () => {
 
   const onSearch = async (val: string) => {
     clearTimeout(searchDebounce);
+    dispatch(setSearchTerm(val));
     searchDebounce = setTimeout(async () => {
       const ticketsData = await api.searchTickets(val);
       dispatch(setTickets(ticketsData));

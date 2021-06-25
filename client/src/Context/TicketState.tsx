@@ -5,6 +5,8 @@ import TicketContext from './TicketContext';
 export interface TicketStateInterface {
     tickets: Ticket[];
     page: number;
+    searchTerm: string;
+    pinnedTickets: Ticket[]
 }
 
 export type Ticket = {
@@ -24,6 +26,8 @@ export interface TicketStateProps {
 export const initialTicketState: TicketStateInterface = {
     tickets: [],
     page: 1,
+    searchTerm: '',
+    pinnedTickets: []
 };
 
 export const TicketState : FC<TicketStateProps> = props => {

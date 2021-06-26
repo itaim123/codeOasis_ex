@@ -1,4 +1,10 @@
 .tickets {
   margin: 0;
   padding: 0;
+  &.pinned{
+    .pinnedTicket{
+
+      background-color: rgb(247, 246, 246);
+    }
+  }
 }

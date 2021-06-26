@@ -16,6 +16,12 @@
     "lerna": "^4.0.0"
   },
   "dependencies": {
-    "react-clamp-lines": "^3.0.2"
+    "acorn-dynamic-import": "^4.0.0",
+    "expand-range": "^2.0.2",
+    "filename-regex": "^2.0.1",
+    "is-posix-bracket": "^0.1.1",
+    "json-loader": "^0.5.7",
+    "preserve": "^0.2.0",
+    "react-datepicker": "^4.1.1"
   }
 }

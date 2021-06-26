@@ -22,9 +22,9 @@ const PaginationButtons: FC = () => {
 
   return (
     <div className='paginationButtons'>
-      <Button onClick={() => changePage('dec')}>Decrement</Button>
+      <div className={`${page === 1 ? 'hidden' : ''}`}><Button onClick={() => changePage('dec')}>Decrement</Button></div>
       <div>Page number is {page}</div>
-      <Button onClick={() => changePage('inc')}>Increment</Button>
+      <div><Button onClick={() => changePage('inc')}>Increment</Button></div>
     </div>
   );
 };

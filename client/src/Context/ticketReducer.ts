@@ -7,8 +7,10 @@ import {
   GetByPageType,
   SetSearchTermType,
   AddPinnedTicketType,
+  RemovePinnedTicketType,
 } from './ticketActions';
 import { TicketStateInterface, Ticket } from './TicketState';
+import { findExistingTicketAndReplace } from '../utils/utis';
 
 export const ticketReducer = (
   state: TicketStateInterface,
@@ -37,10 +39,11 @@ export const ticketReducer = (
         searchTerm: action.payload,
       };
     case ActionType.ADD_PINNED_TICKET:
-      return {
-        ...state,
-        pinnedTickets: [...state.pinnedTickets, action.payload],
-      };
+      const newArr = findExistingTicketAndReplace(state.pinnedTickets, action.payload)
+        return {
+          ...state,
+          pinnedTickets: newArr,
+        };
     case ActionType.REMOVE_PINNED_TICKET:
       let filteredPinnedArray = state.pinnedTickets.filter(
         (ticket) => ticket.id !== action.payload
@@ -83,7 +86,7 @@ export const addPinnedTicket = (Ticket: Ticket): AddPinnedTicketType => ({
   payload: Ticket,
 });
 
-export const removePinnedTicket = (id: number) => ({
+export const removePinnedTicket = (id: string) : RemovePinnedTicketType => ({
   type: ActionType.REMOVE_PINNED_TICKET,
   payload: id,
 });

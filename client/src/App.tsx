@@ -8,12 +8,13 @@ import { setTickets } from './Context/ticketReducer';
 import SearchInput from './components/UI/SearchInput/SearchInput';
 import PaginationButtons from './components/PaginationButtons/PaginationButtons';
 import Results from './components/Results/Results';
+import DatePicker from './components/UI/DatePicker/DatePicker';
 
 import './App.scss';
 
 const api = createApiClient();
 
-const AppFunctional: FC = () => {
+const App: FC = () => {
   const { dispatch } = useContext(TicketContext);
   
   useEffect(() => {
@@ -27,6 +28,7 @@ const AppFunctional: FC = () => {
       <main>
         <h1>Tickets List</h1>
         <PaginationButtons />
+        <DatePicker />
         <SearchInput />
         <Results />
         <Tickets />
@@ -34,4 +36,4 @@ const AppFunctional: FC = () => {
   );
 };
 
-export default AppFunctional;
+export default App;

@@ -21,10 +21,10 @@ const SearchInput: FC<SearchInputProps> = () => {
   const onSearch = async (val: string) => {
     clearTimeout(searchDebounce);
     dispatch(setSearchTerm(val));
-    // const beforeDateStr = checkedDateBefore ? `before:${beforeDate} ${val}` : '';
-    // const afterDateStr = checkedDateAfter ? `after:${afterDate} ${val}` : '';
+    const beforeDateStr = checkedDateBefore ? `before:${beforeDate}` : '';
+    const afterDateStr = checkedDateAfter ? `after:${afterDate}` : '';
     searchDebounce = setTimeout(async () => {
-      const { tickets, totalLength } = await api.searchTickets(val)
+      const { tickets, totalLength } = await api.searchTickets(val, beforeDateStr, afterDateStr)
       dispatch(setTickets(tickets));
       dispatch(setTotalResults(totalLength))
     }, 300);

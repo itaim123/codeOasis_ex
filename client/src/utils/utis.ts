@@ -1,23 +1,4 @@
-// import React, { useContext } from 'react';
-// import TicketContext from '../Context/TicketContext';
-// import { setPage, setTickets } from '../Context/ticketReducer';
-// import { createApiClient } from '../api';
 import { Ticket } from '../Context/TicketState';
-
-// const api = createApiClient();
-// const ticketContext = useContext(TicketContext);
-// const {
-//   state: { page },
-//   dispatch,
-// } = ticketContext;
-
-// export const changePage = (pageDirection: string, searchTerm: string) => {
-//   (async () => {
-//     const updatedPageNumber = pageDirection === 'inc' ? page + 1 : page - 1;
-//     dispatch(setPage(updatedPageNumber));
-//     dispatch(setTickets(await api.getTickets(updatedPageNumber, searchTerm)));
-//   })();
-// };
 
 export const findExistingTicketAndReplace = (
   pinnedTicketsArray: Ticket[],
@@ -56,3 +37,13 @@ export const getTodayFormattedDate = (): string => {
   const day = ('0' + today.getDate()).slice(-2);
   return `${day}/${month}/${today.getFullYear()}`;
 };
+
+
+export const checkQueryCreateTimeStamp = (queryDate) => {
+  if(queryDate){
+    //@ts-ignore
+    const dBeforeTS = (queryDate).replace('before:', '').split('/').reverse().join('-');
+    const newDate = new Date(dBeforeTS)
+    return newDate.getTime()
+  }
+}

@@ -28,7 +28,7 @@ const TicketCmp: FC<TicketProps> = ({ ticket, pinnedTicket }) => {
     <div className={`labels`}>
       {ticket.labels.map((label) => (
         <span className='label' key={label}>
-          {label}
+          {label.toUpperCase()}
         </span>
       ))}
     </div>

@@ -52,12 +52,15 @@
     .labels {
       display: flex;
       .label {
-        font-size: 14px;
+        font-size: 10px;
         margin-left: 12px;
         padding: 8px 12px;
         background-color: #c3e0f2;
         border-radius: 5px;
         cursor: default;
+        &:hover {
+          background-color: #bcdcf0;
+        }
       }
     }
   }

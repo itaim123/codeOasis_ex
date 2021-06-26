@@ -1,10 +1,11 @@
 .button {
-    width: 100px;
+    width: fit-content;
+    font-size: 11px;
     background-color: #d6e8f4;
     color: black;
     cursor: pointer;
     border: none;
-    padding: 5px 8px; 
+    padding: 5px 6px; 
     border-radius: 3px;
     &:hover {
         background-color: #c3e0f2;

@@ -33,9 +33,11 @@ export const createApiClient = (): ApiClient => {
         .get(APIRootPath + `?page=${pageNumber}&search=${searchTerm}`)
         .then((res) => res.data);
     },
-    searchTickets: (val: string, beforeDate?: string, afterDate?: string) => {
+    searchTickets: (val: string, dateBefore?: string, dateAfter?: string) => {
       const searchQuery = val ? `?search=${val}` : '';
-      return axios.get(APIRootPath + searchQuery).then((res) => res.data);
+      const dateBeforeQuery = dateBefore ? `&dBefore=${dateBefore}` : '';
+      const dateAfterQuery = dateAfter ? `&dAfter=${dateAfter}` : '';
+      return axios.get(APIRootPath + searchQuery + dateBeforeQuery + dateAfterQuery).then((res) => res.data);
     },
   };
 };

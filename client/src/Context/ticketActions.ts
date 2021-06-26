@@ -12,6 +12,7 @@ export enum ActionType {
   SET_DATE_AFTER,
   CHECKED_DATE_BEFORE,
   CHECKED_DATE_AFTER,
+  SET_TOTAL_RESULTS,
 }
 
 export interface SetTicketsType {
@@ -67,6 +68,11 @@ export interface CheckedDateAfterType {
   payload: boolean;
 }
 
+export interface SetTotalResultsType {
+  type: ActionType.SET_TOTAL_RESULTS;
+  payload: number;
+}
+
 export type TicketActions =
   | SetTicketsType
   | PageDefaultType
@@ -78,4 +84,5 @@ export type TicketActions =
   | SetDateBeforeType
   | SetDateAfterType
   | CheckedDateBeforeType
-  | CheckedDateAfterType;
+  | CheckedDateAfterType
+  | SetTotalResultsType;

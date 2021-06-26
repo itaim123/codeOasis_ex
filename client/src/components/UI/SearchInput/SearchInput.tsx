@@ -1,6 +1,6 @@
 import React, { FC, useContext } from 'react';
 import { createApiClient } from '../../../api';
-import { setTickets, setSearchTerm } from '../../../Context/ticketReducer';
+import { setTickets, setSearchTerm, setTotalResults } from '../../../Context/ticketReducer';
 import TicketContext from '../../../Context/TicketContext';
 import './SearchBoxInput.scss';
 
@@ -14,15 +14,19 @@ interface SearchInputProps {
 }
 
 const SearchInput: FC<SearchInputProps> = () => {
-  const { dispatch } = useContext(TicketContext);
+  const { state, dispatch } = useContext(TicketContext);
+  const { checkedDateAfter, checkedDateBefore , afterDate, beforeDate} = state;
   let searchDebounce: any = null;
 
   const onSearch = async (val: string) => {
     clearTimeout(searchDebounce);
     dispatch(setSearchTerm(val));
+    // const beforeDateStr = checkedDateBefore ? `before:${beforeDate} ${val}` : '';
+    // const afterDateStr = checkedDateAfter ? `after:${afterDate} ${val}` : '';
     searchDebounce = setTimeout(async () => {
-      const ticketsData = await api.searchTickets(val);
-      dispatch(setTickets(ticketsData));
+      const { tickets, totalLength } = await api.searchTickets(val)
+      dispatch(setTickets(tickets));
+      dispatch(setTotalResults(totalLength))
     }, 300);
   };
 

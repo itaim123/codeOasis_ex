@@ -2,6 +2,8 @@ import React, { useState, FC, useContext, useEffect } from 'react';
 import { Ticket } from '../../api';
 import Content from './Content/Content';
 import TicketContext from '../../Context/TicketContext';
+import ShareButton from '../UI/ShareButton/ShareButton';
+import pinnedImg from '../../assets/pin_marker.png';
 import {
   addPinnedTicket,
   removePinnedTicket,
@@ -17,7 +19,6 @@ type TicketProps = {
 
 const TicketCmp: FC<TicketProps> = ({ ticket, pinnedTicket }) => {
   const [pinned, setPinned] = useState(false);
-
   useEffect(()=>pinnedTicket && setPinned(true), [setPinned,pinnedTicket])
   
   const ticketContext = useContext(TicketContext);
@@ -35,20 +36,20 @@ const TicketCmp: FC<TicketProps> = ({ ticket, pinnedTicket }) => {
 
   const pinHandler = () => {
     setPinned((pinned) => !pinned);
-    console.log(pinned)
     if (!pinned) {
       dispatch(addPinnedTicket(ticket));
     } else {
-      console.log('Removing!')
       dispatch(removePinnedTicket(ticket.id));
     }
   };
 
   return (
-    <li key={ticket.id} className={`ticket ${pinnedTicket ? 'pinnedTicket' : ''}`}>
+    <li key={ticket.id} 
+    className={`ticket ${pinnedTicket ? 'pinnedTicket' : ''}`}
+    >
       <h5 className='title'>{ticket.title}</h5>
       <span className='pinned' onClick={pinHandler}>
-        {pinned ? 'Unpin' : 'Pin'}
+        {pinned ? <img src={pinnedImg} alt='pinnedImage' /> : 'Pin'}
       </span>
       <Content content={ticket.content} />
       <footer>
@@ -57,6 +58,7 @@ const TicketCmp: FC<TicketProps> = ({ ticket, pinnedTicket }) => {
           {new Date(ticket.creationTime).toLocaleString()}
         </div>
         {ticket.labels && renderLabels(ticket)}
+        <ShareButton title={ticket.title} />
       </footer>
     </li>
   );

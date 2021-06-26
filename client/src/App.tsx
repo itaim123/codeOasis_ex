@@ -1,38 +1,39 @@
-import React, { FC, useEffect, useContext } from 'react';
+import React, { Suspense, FC, useEffect, useContext } from 'react';
 import { createApiClient } from './api';
-
-
-import Tickets from './components/Tickets/Tickets';
 import TicketContext from './Context/TicketContext';
-import { setTickets } from './Context/ticketReducer';
+import { setTickets, setTotalResults } from './Context/ticketReducer';
 import SearchInput from './components/UI/SearchInput/SearchInput';
 import PaginationButtons from './components/PaginationButtons/PaginationButtons';
 import Results from './components/Results/Results';
 import DatePickers from './components/DatePickers/DatePickers';
-
 import './App.scss';
 
+const Tickets = React.lazy(() => import('./components/Tickets/Tickets'));
 const api = createApiClient();
 
 const App: FC = () => {
-  const { dispatch } = useContext(TicketContext);
-  
+  const { state, dispatch } = useContext(TicketContext);
+  const { totalResults } = state;
   useEffect(() => {
     (async function () {
-      dispatch(setTickets(await api.getTickets()));
+      const { tickets, totalLength } = await api.getTickets();
+      dispatch(setTickets(tickets));
+      dispatch(setTotalResults(totalLength));
     })();
     // eslint-disable-next-line
   }, []);
 
   return (
-      <main>
-        <h1>Tickets List</h1>
-        <PaginationButtons />
-        <DatePickers />
-        <SearchInput />
-        <Results />
-        <Tickets />
-      </main>
+    <main>
+      <h1>Tickets List</h1>
+      <DatePickers />
+      <SearchInput />
+      <PaginationButtons />
+      <Results />
+      <Suspense fallback={<div>Loading...</div>}>
+      {totalResults ? <Tickets /> : <div>No results were found...</div>}
+      </Suspense>
+    </main>
   );
 };
 

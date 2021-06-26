@@ -11,6 +11,7 @@ export interface TicketStateInterface {
     checkedDateBefore: boolean,
     afterDate: string,
     checkedDateAfter: boolean,
+    totalResults: number
 }
 
 export type Ticket = {
@@ -35,6 +36,7 @@ export const initialTicketState: TicketStateInterface = {
     checkedDateBefore: false,
     afterDate: '',
     checkedDateAfter: false,
+    totalResults: 0
 };
 
 export const TicketState : FC<TicketStateProps> = props => {

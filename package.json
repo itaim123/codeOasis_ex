@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "lerna run start --parallel",
     "postinstall": "npm run bootstrap",
-    "add": "lerna add @material-ui/core --scope=@fed-exam/client"
+    "add": "lerna add font-awesome --scope=@fed-exam/client"
   },
   "author": "",
   "license": "ISC",

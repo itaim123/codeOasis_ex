@@ -14,7 +14,6 @@ const CheckboxComponent = ({ checked, setChecked }) => {
     <Checkbox
       checked={checked}
       onChange={handleChange}
-      defaultChecked
       color='primary'
       inputProps={{ 'aria-label': 'secondary checkbox' }}
     />

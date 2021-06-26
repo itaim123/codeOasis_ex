@@ -1,4 +1,5 @@
 import React, { FC, useContext } from 'react';
+
 import Button from '../UI/Button/Button';
 import { setTickets, setPage } from '../../Context/ticketReducer';
 import TicketContex from '../../Context/TicketContext';
@@ -9,22 +10,33 @@ const api = createApiClient();
 
 const PaginationButtons: FC = () => {
   const { state, dispatch } = useContext(TicketContex);
-  const { searchTerm, page } = state;
+  const { searchTerm, page, totalResults } = state;
+  const PAGE_SIZE = 20;
+  const totalPages = Math.ceil(totalResults / PAGE_SIZE);
 
-  const changePage = async (pageNum: string) => {
-    const updatedPageNumber = pageNum === 'inc' ? page + 1 : page - 1;
+  const changePage = async (pageDir: string) => {
+    const updatedPageNumber = pageDir === 'inc' ? page + 1 : page - 1;
     dispatch(setPage(updatedPageNumber));
-    dispatch(setTickets(await api.getTickets(updatedPageNumber, searchTerm)));
-    // Throw Dispatches Here
+    const { tickets } = await api.getTickets(updatedPageNumber, searchTerm);
+    console.log(pageDir, tickets);
+    dispatch(setTickets(tickets));
   };
-
-  //  disabled={page === 1 ? true : false}
 
   return (
     <div className='paginationButtons'>
-      <div className={`${page === 1 ? 'hidden' : ''}`}><Button onClick={() => changePage('dec')}>Decrement</Button></div>
-      <div>Page number is {page}</div>
-      <div><Button onClick={() => changePage('inc')}>Increment</Button></div>
+      <div className={`changePageButton ${page === 1 ? 'hidden' : ''}`}>
+        <div onClick={() => changePage('dec')}>{'<'}</div>
+      </div>
+      <div className='pageLabel'>
+        {page} \ {totalPages}
+      </div>
+
+      <div
+        className={`changePageButton ${page === totalPages ? 'hidden' : ''}`}
+        onClick={() => changePage('inc')}
+      >
+        {'>'}
+      </div>
     </div>
   );
 };

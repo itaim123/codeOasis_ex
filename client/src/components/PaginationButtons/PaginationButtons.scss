@@ -2,7 +2,17 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    padding: 20px 10px;
+    .changePageButton {
+        background-color: #c3e0f2;
+        border-radius: 10px;
+        padding: 3px 10px;
+        cursor: pointer;
+    }
     .hidden{
         visibility: hidden;
+    }
+    .pageLabel {
+        font-family: Arial, Helvetica, sans-serif;
     }
 }

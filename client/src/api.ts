@@ -1,29 +1,41 @@
 import axios from 'axios';
-import {APIRootPath} from '@fed-exam/config';
+import { APIRootPath } from '@fed-exam/config';
 
 export type Ticket = {
-    id: string,
-    title: string;
-    content: string;
-    creationTime: number;
-    userEmail: string;
-    labels?: string[];
+  id: string;
+  title: string;
+  content: string;
+  creationTime: number;
+  userEmail: string;
+  labels?: string[];
+};
+
+interface ResponseType {
+  tickets: Ticket[];
+  totalLength: number
 }
 
 export type ApiClient = {
-    getTickets: (page?: number | undefined, val?: string) => Promise<Ticket[]>;
-    searchTickets: (val: string) => Promise<Ticket[]>;
-}
+  getTickets: (page?: number | undefined, val?: string) => Promise<ResponseType>;
+  searchTickets: (
+    val: string,
+    beforeDate?: string,
+    afterDate?: string
+  ) => Promise<ResponseType>;
+};
 
 export const createApiClient = (): ApiClient => {
-    return {
-        getTickets: (page, value) => {
-            const pageNumber = page ? page : 1;
-            const searchTerm = value ? value : null;
-            return axios.get(APIRootPath + `?page=${pageNumber}&?search=${searchTerm}`).then((res) => res.data);
-        },
-        searchTickets: (val : string) => {
-            return axios.get(APIRootPath + `?search=${val}`).then((res) => res.data)
-        }
-    }
-}
+  return {
+    getTickets: (page, value) => {
+      const pageNumber = page ? page : 1;
+      const searchTerm = value ? value : '';
+      return axios
+        .get(APIRootPath + `?page=${pageNumber}&search=${searchTerm}`)
+        .then((res) => res.data);
+    },
+    searchTickets: (val: string, beforeDate?: string, afterDate?: string) => {
+      const searchQuery = val ? `?search=${val}` : '';
+      return axios.get(APIRootPath + searchQuery).then((res) => res.data);
+    },
+  };
+};

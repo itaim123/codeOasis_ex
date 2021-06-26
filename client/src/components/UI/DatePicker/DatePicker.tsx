@@ -27,27 +27,29 @@ const DatePicker: FC<DatePickerProps> = ({ id, label, checked }) => {
   useEffect(() => {
     dispatch(setDateBefore(getTodayFormattedDate()));
     dispatch(setDateAfter(getTodayFormattedDate()));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const ticketContext = useContext(TicketContext);
-  const { state, dispatch } = ticketContext;
+  const { dispatch } = ticketContext;
   const classes = useStyles();
-  const onChangeDateHandler = e => {
-    if(id === 'beforeDate'){
-      dispatch(setDateAfter(e.target.value))
-    } else if(id==='afterDate') {
-      dispatch(setDateBefore(e.target.value))
-    }
-  }
 
+  const onChangeDateHandler = (e) => {
+    if (id === 'beforeDate') {
+      dispatch(setDateBefore(e.target.value));
+    } else if (id === 'afterDate') {
+      dispatch(setDateAfter(e.target.value));
+    }
+  };
   return (
     <form className={classes.container} noValidate>
       <TextField
         id={id}
+        disabled={!checked}
         label={label}
         type='date'
         onChange={onChangeDateHandler}
-        defaultValue={getTodayFormattedDate()}
+        defaultValue={getTodayFormattedDate().split('/').reverse().join('-')}
         className={classes.textField}
         InputLabelProps={{
           shrink: true,

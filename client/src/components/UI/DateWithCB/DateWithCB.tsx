@@ -14,7 +14,7 @@ interface DateWithCBProps {
 const DateWithCB: FC<DateWithCBProps> = ({ id, label }) => {
   const [checked, setChecked] = useState(false);
   const ticketContext = useContext(TicketContext);
-  const { state, dispatch } = ticketContext;
+  const { dispatch } = ticketContext;
 
   useEffect(()=>{
     if(id==='beforeDate'){
@@ -22,7 +22,7 @@ const DateWithCB: FC<DateWithCBProps> = ({ id, label }) => {
     } else if (id==='afterDate'){
       dispatch(checkedDateAfter(checked))
     }
-  }, [checked])
+  }, [checked, id, dispatch])
   return (
     <div className='datePickerWithCB'>
       <CheckboxComponent checked={checked} setChecked={setChecked} />

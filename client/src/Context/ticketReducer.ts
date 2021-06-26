@@ -11,7 +11,8 @@ import {
   SetDateAfterType,
   SetDateBeforeType,
   CheckedDateBeforeType,
-  CheckedDateAfterType
+  CheckedDateAfterType,
+  SetTotalResultsType,
 } from './ticketActions';
 import { TicketStateInterface, Ticket } from './TicketState';
 import { findExistingTicketAndReplace } from '../utils/utis';
@@ -41,14 +42,17 @@ export const ticketReducer = (
       return {
         ...state,
         searchTerm: action.payload,
-        page: 1
+        page: 1,
       };
     case ActionType.ADD_PINNED_TICKET:
-      const newArr = findExistingTicketAndReplace(state.pinnedTickets, action.payload)
-        return {
-          ...state,
-          pinnedTickets: newArr,
-        };
+      const newArr = findExistingTicketAndReplace(
+        state.pinnedTickets,
+        action.payload
+      );
+      return {
+        ...state,
+        pinnedTickets: newArr,
+      };
     case ActionType.REMOVE_PINNED_TICKET:
       let filteredPinnedArray = state.pinnedTickets.filter(
         (ticket) => ticket.id !== action.payload
@@ -57,28 +61,31 @@ export const ticketReducer = (
         ...state,
         pinnedTickets: filteredPinnedArray,
       };
-      case ActionType.SET_DATE_BEFORE: 
+    case ActionType.SET_DATE_BEFORE:
       return {
         ...state,
-        beforeDate: action.payload
-      }
-      case ActionType.SET_DATE_AFTER: 
+        beforeDate: action.payload,
+      };
+    case ActionType.SET_DATE_AFTER:
       return {
         ...state,
-        afterDate: action.payload
-      }
-      case ActionType.CHECKED_DATE_BEFORE: 
-      console.log('set date before', action.payload)
+        afterDate: action.payload,
+      };
+    case ActionType.CHECKED_DATE_BEFORE:
       return {
         ...state,
-        checkedDateBefore: action.payload
-      }
-      case ActionType.CHECKED_DATE_AFTER:
-        console.log('set date after', action.payload)
+        checkedDateBefore: action.payload,
+      };
+    case ActionType.CHECKED_DATE_AFTER:
       return {
         ...state,
-        checkedDateBefore: action.payload
-      }
+        checkedDateAfter: action.payload,
+      };
+    case ActionType.SET_TOTAL_RESULTS:
+      return {
+        ...state,
+        totalResults: action.payload,
+      };
     default:
       return state;
   }
@@ -113,28 +120,34 @@ export const addPinnedTicket = (Ticket: Ticket): AddPinnedTicketType => ({
   payload: Ticket,
 });
 
-export const removePinnedTicket = (id: string) : RemovePinnedTicketType => ({
+export const removePinnedTicket = (id: string): RemovePinnedTicketType => ({
   type: ActionType.REMOVE_PINNED_TICKET,
   payload: id,
 });
 
-export const setDateBefore = ( formattedDate : string ) : SetDateBeforeType => ({
+export const setDateBefore = (formattedDate: string): SetDateBeforeType => ({
   type: ActionType.SET_DATE_BEFORE,
-  payload: formattedDate
-})
+  payload: formattedDate,
+});
 
-export const setDateAfter = ( formattedDate : string ) : SetDateAfterType => ({
+export const setDateAfter = (formattedDate: string): SetDateAfterType => ({
   type: ActionType.SET_DATE_AFTER,
-  payload: formattedDate
-})
+  payload: formattedDate,
+});
 
-export const checkedDateBefore = ( isChecked : boolean ) : CheckedDateBeforeType => ({
+export const checkedDateBefore = (
+  isChecked: boolean
+): CheckedDateBeforeType => ({
   type: ActionType.CHECKED_DATE_BEFORE,
-  payload: isChecked
-})
+  payload: isChecked,
+});
 
-export const checkedDateAfter = ( isChecked : boolean ) : CheckedDateAfterType => ({
+export const checkedDateAfter = (isChecked: boolean): CheckedDateAfterType => ({
   type: ActionType.CHECKED_DATE_AFTER,
-  payload: isChecked
-})
+  payload: isChecked,
+});
 
+export const setTotalResults = (total: number): SetTotalResultsType => ({
+  type: ActionType.SET_TOTAL_RESULTS,
+  payload: total,
+});

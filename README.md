@@ -1,5 +1,3 @@
-<!-- npm install --save-dev webpack-bundle-analyzer -->
-
 # Wix FED Entry Level Exam
 
 Hi there!  

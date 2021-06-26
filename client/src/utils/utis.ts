@@ -35,17 +35,24 @@ export const findExistingTicketAndReplace = (
   return pinnedTicketsArray;
 };
 
-export const removeDuplicates = (tickets:Ticket[], pinnedTickets: Ticket[]) => {
-    // return the tickets array after removing duplicates
-    console.log('Remove dup')
-    let newArr : Ticket[] = [...tickets];
-    for(let pinned of pinnedTickets){
-        console.log('loop pinned', pinned)
-        const found = tickets.find(ticket=>pinned.id===ticket.id);
-        if(found){
-            newArr = newArr.filter(ticket=>ticket.id !== found.id)
-        }
+export const removeDuplicates = (
+  tickets: Ticket[],
+  pinnedTickets: Ticket[]
+) => {
+  // return the tickets array after removing duplicates
+  let newArr: Ticket[] = [...tickets];
+  for (let pinned of pinnedTickets) {
+    const found = tickets.find((ticket) => pinned.id === ticket.id);
+    if (found) {
+      newArr = newArr.filter((ticket) => ticket.id !== found.id);
     }
-    console.log('new array from utils', newArr)
-    return newArr
-}
+  }
+  return newArr;
+};
+
+export const getTodayFormattedDate = (): string => {
+  const today = new Date();
+  const month = ('0' + (today.getMonth() + 1)).slice(-2);
+  const day = ('0' + today.getDate()).slice(-2);
+  return `${today.getFullYear()}-${month}-${day}`;
+};

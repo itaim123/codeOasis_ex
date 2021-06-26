@@ -8,7 +8,7 @@ import { setTickets } from './Context/ticketReducer';
 import SearchInput from './components/UI/SearchInput/SearchInput';
 import PaginationButtons from './components/PaginationButtons/PaginationButtons';
 import Results from './components/Results/Results';
-import DatePicker from './components/UI/DatePicker/DatePicker';
+import DatePickers from './components/DatePickers/DatePickers';
 
 import './App.scss';
 
@@ -28,7 +28,7 @@ const App: FC = () => {
       <main>
         <h1>Tickets List</h1>
         <PaginationButtons />
-        <DatePicker />
+        <DatePickers />
         <SearchInput />
         <Results />
         <Tickets />

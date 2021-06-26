@@ -11,11 +11,9 @@ const Tickets = () => {
   const {
     state: { tickets, pinnedTickets },
   } = ticketContext;
-  let updatedTicketsArray : Ticket[] = tickets;
+  let updatedTicketsArray: Ticket[] = tickets;
 
-    updatedTicketsArray = removeDuplicates(tickets, pinnedTickets)
-
-  console.log(updatedTicketsArray, updatedTicketsArray.length)
+  updatedTicketsArray = removeDuplicates(tickets, pinnedTickets);
 
   const pinnedTicketsElement: JSX.Element = pinnedTickets ? (
     <ul className='tickets pinned'>

@@ -8,6 +8,10 @@ import {
   SetSearchTermType,
   AddPinnedTicketType,
   RemovePinnedTicketType,
+  SetDateAfterType,
+  SetDateBeforeType,
+  CheckedDateBeforeType,
+  CheckedDateAfterType
 } from './ticketActions';
 import { TicketStateInterface, Ticket } from './TicketState';
 import { findExistingTicketAndReplace } from '../utils/utis';
@@ -37,6 +41,7 @@ export const ticketReducer = (
       return {
         ...state,
         searchTerm: action.payload,
+        page: 1
       };
     case ActionType.ADD_PINNED_TICKET:
       const newArr = findExistingTicketAndReplace(state.pinnedTickets, action.payload)
@@ -52,6 +57,28 @@ export const ticketReducer = (
         ...state,
         pinnedTickets: filteredPinnedArray,
       };
+      case ActionType.SET_DATE_BEFORE: 
+      return {
+        ...state,
+        beforeDate: action.payload
+      }
+      case ActionType.SET_DATE_AFTER: 
+      return {
+        ...state,
+        afterDate: action.payload
+      }
+      case ActionType.CHECKED_DATE_BEFORE: 
+      console.log('set date before', action.payload)
+      return {
+        ...state,
+        checkedDateBefore: action.payload
+      }
+      case ActionType.CHECKED_DATE_AFTER:
+        console.log('set date after', action.payload)
+      return {
+        ...state,
+        checkedDateBefore: action.payload
+      }
     default:
       return state;
   }
@@ -90,3 +117,24 @@ export const removePinnedTicket = (id: string) : RemovePinnedTicketType => ({
   type: ActionType.REMOVE_PINNED_TICKET,
   payload: id,
 });
+
+export const setDateBefore = ( formattedDate : string ) : SetDateBeforeType => ({
+  type: ActionType.SET_DATE_BEFORE,
+  payload: formattedDate
+})
+
+export const setDateAfter = ( formattedDate : string ) : SetDateAfterType => ({
+  type: ActionType.SET_DATE_AFTER,
+  payload: formattedDate
+})
+
+export const checkedDateBefore = ( isChecked : boolean ) : CheckedDateBeforeType => ({
+  type: ActionType.CHECKED_DATE_BEFORE,
+  payload: isChecked
+})
+
+export const checkedDateAfter = ( isChecked : boolean ) : CheckedDateAfterType => ({
+  type: ActionType.CHECKED_DATE_AFTER,
+  payload: isChecked
+})
+

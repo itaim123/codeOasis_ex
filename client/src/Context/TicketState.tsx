@@ -6,7 +6,11 @@ export interface TicketStateInterface {
     tickets: Ticket[];
     page: number;
     searchTerm: string;
-    pinnedTickets: Ticket[]
+    pinnedTickets: Ticket[],
+    beforeDate: string,
+    checkedDateBefore: boolean,
+    afterDate: string,
+    checkedDateAfter: boolean,
 }
 
 export type Ticket = {
@@ -19,7 +23,6 @@ export type Ticket = {
 }
 
 export interface TicketStateProps {
-    // children: JSX.Element[] | JSX.Element
     children: React.ReactNode
 }
 
@@ -27,7 +30,11 @@ export const initialTicketState: TicketStateInterface = {
     tickets: [],
     page: 1,
     searchTerm: '',
-    pinnedTickets: []
+    pinnedTickets: [],
+    beforeDate: '',
+    checkedDateBefore: false,
+    afterDate: '',
+    checkedDateAfter: false,
 };
 
 export const TicketState : FC<TicketStateProps> = props => {
